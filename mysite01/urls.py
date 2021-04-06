@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.urls import path
 import main.views as mainviews
+import guestbook.views as guetbookviews
 
 urlpatterns = [
     path('', mainviews.index),
+
+    path('guestbook/', guetbookviews.index),
+
 ]
