@@ -29,4 +29,6 @@ urlpatterns = [
     path('user/loginform', userviews.loginform),
     path('user/login', userviews.login),
     path('user/logout', userviews.logout),
+    path('user/updateform', userviews.updateform),
+
 ]

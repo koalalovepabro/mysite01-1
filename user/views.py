@@ -44,3 +44,17 @@ def login(request):
 def logout(request):
     del request.session["authuser"]
     return HttpResponseRedirect('/')
+
+
+def updateform(request):
+    # Access Control(접근 제어)
+    if 'authuser' not in request.session:
+        return HttpResponseRedirect('/')
+
+    authuser = request.session["authuser"]
+    result = models.findbyno(authuser["no"])
+    return render(request, 'user/updateform.html')
+
+
+def update(request):
+    pass

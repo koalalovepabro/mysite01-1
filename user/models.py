@@ -2,7 +2,8 @@ from MySQLdb import connect, OperationalError
 from MySQLdb.cursors import DictCursor
 
 
-def findbyno():
+def findbyno(no):
+    sql = 'select name, email, gender from user where no = %s'
     pass
 
 
