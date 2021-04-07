@@ -24,5 +24,6 @@ urlpatterns = [
     path('guestbook/', guetbookviews.index),
 
     path('user/joinform', userviews.joinform),
-
+    path('user/join', userviews.join),
+    path('user/joinsuccess', userviews.joinsuccess),
 ]
