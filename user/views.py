@@ -48,7 +48,8 @@ def logout(request):
 
 def updateform(request):
     # Access Control(접근 제어)
-    if 'authuser' not in request.session:
+    authuser = request.session.get("authuser")
+    if authuser is None:
         return HttpResponseRedirect('/')
 
     authuser = request.session["authuser"]
