@@ -26,4 +26,7 @@ urlpatterns = [
     path('user/joinform', userviews.joinform),
     path('user/join', userviews.join),
     path('user/joinsuccess', userviews.joinsuccess),
+    path('user/loginform', userviews.loginform),
+    path('user/login', userviews.login),
+    path('user/logout', userviews.logout),
 ]
