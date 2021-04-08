@@ -73,7 +73,7 @@ def insert(name, email, password, gender):
         print(f'error: {e}')
 
 
-def update(name, password):
+def update(no, name, password, gender):
     try:
         db = conn()
         cursor = db.cursor()
@@ -88,17 +88,17 @@ def update(name, password):
         else:
             sql = '''
                 update user
-                   set name=%s, password=password(%s), gender=%s
+                   set name=%s, password=%s, gender=%s
                  where no=%s 
             '''
             t = (name, password, gender, no)
 
         cursor.execute(sql, t)
-        conn.commit()
+        db.commit()
 
         # 자원 정리
         cursor.close()
-        conn.close()
+        db.close()
 
     except OperationalError as e:
         print(f'error: {e}')
