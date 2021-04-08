@@ -1,0 +1,94 @@
+[mysite01 장고 프로젝트 만들기]
+
+
+01. django library 설치
+(env) # pip install django
+--------------------------------------------------------------------------------------------------------------------
+
+
+02. mysqlclient library 설치(ORM 적용할 경우, 생략)
+(env) # pip install mysqlclient
+--------------------------------------------------------------------------------------------------------------------
+
+
+03. 장고 프로젝트 생성
+(env) # django-admin startproject mysite01
+--------------------------------------------------------------------------------------------------------------------
+
+
+04. 디렉토리 정리(pycharm 프로젝트와 장고 프로젝트를 일치)
+--------------------------------------------------------------------------------------------------------------------
+
+
+05. 초기 설정(settings.py)
+
+1) time zone 설정
+TIME_ZONE = 'Asia/Seoul'
+
+2) database 설정
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'webdb',
+        'USER': 'webdb',
+        'PASSWORD': 'webdb',
+        'HOST': 'localhost',
+        'PORT': 3306
+    }
+}
+
+3) DATETIME Format 설정(생략)
+
+DATETIME_FORMAT = "Y-m-d P h:i:s"
+L10N = False
+USE_TZ = False
+--------------------------------------------------------------------------------------------------------------------
+
+
+06. admin 애플리케이션 삭제하기(settings.py, urls.py)
+
+1)
+INSTALLED_APPS = [ ... ] 에서 'django.contrib.admin' 삭제
+
+2)
+urlpatterns = [] 에서 'admin/' 매핑 삭제
+--------------------------------------------------------------------------------------------------------------------
+
+
+07. ORM을 적용하고 mysql5.1x 인 경우 manage.py 수정
+
+from django.db.backends.mysql.base import DatabaseWrapper
+DatabaseWrapper.data_types['DateTimeField'] = 'datetime'
+--------------------------------------------------------------------------------------------------------------------
+
+
+08. Application들의 통합 template 디렉토리 templates 만들기
+
+1) 디렉토리 생성
+    mysite01
+       |--- templates
+
+
+2) template 디렉토리 설정(settings.py)
+import os
+
+'DIRS': [os.path.join(BASE_DIR, 'templates')]
+--------------------------------------------------------------------------------------------------------------------
+
+
+09. static 파일(css, js, images) 설정(settings.py)
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'statics'),
+)
+STATIC_URL = '/assets/'
+--------------------------------------------------------------------------------------------------------------------
+
+
+10. Session Cookie 브라우저 메모리에 저장 하도록 설정
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+
+
