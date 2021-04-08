@@ -36,6 +36,7 @@ def login(request):
         return HttpResponseRedirect('/user/loginform?result=fail')
 
     # login 처리
+    print(type(result))
     request.session["authuser"] = result
 
     return HttpResponseRedirect('/')
@@ -58,4 +59,10 @@ def updateform(request):
 
 
 def update(request):
-    pass
+    request.session["authuser"]["name"] = "둘리"
+    # request.session["authuser"] = {'no': 1, 'name': '둘리'}
+
+    # request.session["authuser"]["name"] = "둘리"
+    # print(request.session["authuser"]["name"])
+
+    return HttpResponse('ok')

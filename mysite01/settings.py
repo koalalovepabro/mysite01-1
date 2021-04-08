@@ -130,3 +130,5 @@ STATIC_URL = '/assets/'
 
 # session cookies(csrftoken) stored in memory
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# Django will save the session to the database on every single request.
+SESSION_SAVE_EVERY_REQUEST = True
