@@ -53,16 +53,22 @@ def updateform(request):
     if authuser is None:
         return HttpResponseRedirect('/')
 
-    authuser = request.session["authuser"]
-    result = models.findbyno(authuser["no"])
-    return render(request, 'user/updateform.html')
+    no = request.session['authuser']['no']
+
+    # 1. 데이터를 가져오기
+    result = models.findbyno(no)
+    data = {'user': result}
+
+    return render(request, 'user/updateform.html', data)
 
 
 def update(request):
-    request.session["authuser"]["name"] = "둘리"
-    # request.session["authuser"] = {'no': 1, 'name': '둘리'}
+    no = request.session['authuser']['no']
+    name = request.POST['name']
+    password = request.POST['password']
+    gender = request.POST['gender']
 
-    # request.session["authuser"]["name"] = "둘리"
-    # print(request.session["authuser"]["name"])
+    models.update(no, name, password, gender)
+    request.session['authuser'] = {'no': no, 'name': name}
 
-    return HttpResponse('ok')
+    return HttpResponseRedirect('/user/updateform')
