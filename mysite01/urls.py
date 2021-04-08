@@ -15,14 +15,17 @@ Including another URLconf
 """
 from django.urls import path
 import main.views as mainviews
-import guestbook.views as guetbookviews
+import guestbook.views as guestbookviews
 import user.views as userviews
 import board.views as boardviews
 
 urlpatterns = [
     path('', mainviews.index),
 
-    path('guestbook/', guetbookviews.index),
+    path('guestbook/', guestbookviews.index),
+    path('guestbook/add', guestbookviews.add),
+    path('guestbook/deleteform', guestbookviews.deleteform),
+    path('guestbook/delete', guestbookviews.delete),
 
     path('user/joinform', userviews.joinform),
     path('user/join', userviews.join),
