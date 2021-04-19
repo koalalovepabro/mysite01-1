@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>mysite</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
+{% extends "../base.html" %}
+
+{% load mathfilters %}
+
+{% block css_link %}
 <link href="/assets/css/board.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="">로그인</a><li>
-				<li><a href="">회원가입</a><li>
-				<li><a href="">회원정보수정</a><li>
-				<li><a href="">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
-		<div id="content">
+{% endblock %}
+
+{% block content %}
 			<div id="board">
 				<form id="search_form" action="" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
@@ -31,62 +20,61 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
-					</tr>				
-					<tr>
-						<td>3</td>
-						<td><a href="" style="text-align:left; padding-left:0px">세 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del">삭제</a></td>
 					</tr>
+					{% for data in boardlist %}
 					<tr>
-						<td>2</td>
-						<td><a href="" style="text-align:left; padding-left:30px"><img src="/assets/images/reply.png" /> 두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
+						<!--
+						<td>{{ boardlist.count | sub:forloop.counter | add:1 }}</td>
+						-->
+						<td>{{ data.index }}</td>
+						<td><a href="/board/view?id={{ data.board.id }}">{{ data.board.title }}</a></td>
+						<td>{{ data.board.user.name }}</td>
+						<td>{{ data.board.hit }}</td>
+						<td>{{ data.board.regdate }}</td>
+						<td>
+							{% if request.session.authuser is not None and request.session.authuser.id == data.board.user.id %}
+							<a href="/board/delete?id={{ data.board.id }}" class="del">삭제</a>
+							{% endif %}
+						</td>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td><a href="" style="text-align:left; padding-left:60px"><img src="/assets/images/reply.png" /> 첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
+					{% endfor %}
 				</table>
-				
+
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
+						{% if prevpage > 0 %}
+						<li><a href="/board?p={{ prevpage }}">◀</a></li>
+						{% endif %}
+
+						{% for page in range %}
+							{% if endpage < page %}
+							{{ page }}
+							{% elif page == currentpage %}
+							<li class='selected'>{{ page }}</li>
+							{% else %}
+							<li><a href="/board?p={{ page }}">{{ page }}</a></li>
+							{% endif %}
+						{% endfor %}
+
+						<!--
 						<li class="selected">2</li>
 						<li><a href="">3</a></li>
 						<li>4</li>
 						<li>5</li>
-						<li><a href="">▶</a></li>
+						-->
+
+						{% if nextpage > 0 %}
+						<li><a href="/board?p={{ nextpage }}">▶</a></li>
+						{% endif %}
 					</ul>
-				</div>					
+				</div>
 				<!-- pager 추가 -->
-				
+
+				{% if request.session.authuser is not None %}
 				<div class="bottom">
-					<a href="" id="new-book">글쓰기</a>
-				</div>				
+					<a href="/board/write" id="new-book">글쓰기</a>
+				</div>
+				{% endif %}
 			</div>
-		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="">안대혁</a></li>
-				<li><a href="">방명록</a></li>
-				<li><a href="">게시판</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2015, 2016, 2017, 2018</p>
-		</div>
-	</div>
-</body>
-</html>
+{% endblock %}
